@@ -18,7 +18,14 @@ var ProductService = (function () {
     }
     ProductService.prototype.getProducts = function () {
         return this.http.get('/products')
-            .map(function (res) { return res.json(); });
+            .map(function (res) {
+            var unparsed = res.json();
+            return unparsed.map(function (jsonProd) {
+                var categories = jsonProd.categories.split(',');
+                jsonProd.categories = categories;
+                return jsonProd;
+            });
+        });
     };
     ;
     /**
@@ -28,6 +35,16 @@ var ProductService = (function () {
      */
     ProductService.prototype.getProductById = function (id) {
         return this.http.get("/products/" + id)
+            .map(function (res) { return res.json()[0]; });
+    };
+    /**
+     * Return the reviews associated with a particular product
+     * @param productId
+     * @returns {undefined|{id: number, productId: number, timestamp: string, user: string, rating: number, comment: string}|{id: number,
+      * productId: number, timestamp: string, user: string, rating: number, comment: string}}
+     */
+    ProductService.prototype.getProductReviews = function (productId) {
+        return this.http.get("/products/" + productId + "/reviews")
             .map(function (res) { return res.json(); });
     };
     ProductService.prototype.getCategories = function () {

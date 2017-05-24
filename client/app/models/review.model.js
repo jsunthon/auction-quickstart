@@ -1,13 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Review = (function () {
-    function Review(id, productId, timestamp, user, rating, comment) {
+    function Review(id, dateCreated, rating, comment, user) {
         this.id = id;
-        this.productId = productId;
-        this.timestamp = timestamp;
-        this.user = user;
+        this.dateCreated = dateCreated;
         this.rating = rating;
         this.comment = comment;
+        this.user = user;
     }
     return Review;
 }());

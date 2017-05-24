@@ -31,21 +31,22 @@
              class="large"></stars>
     </div>
     <div>
-      <textarea [(ngModel)]="newComment">
+      <textarea class="col-md-12" [(ngModel)]="newComment">
       </textarea>
     </div>
+    <br>
     <div>
       <button class="btn btn-info" (click)="addReview()">Submit Review</button>
     </div>
-</div>
-
-<div class="row" *ngFor="let review of reviews">
-  <hr>
-  <div class="col-md-12">
-    <stars [rating]="review.rating"></stars>
-    <span>{{review.user}}</span>
-    <span class="pull-right"> {{review.timestamp | date: 'shortDate'}}</span>
-    <p>{{review.comment}}</p>
   </div>
-</div>
+
+  <div class="row" *ngFor="let review of reviews">
+    <hr>
+    <div class="col-md-12">
+      <stars [rating]="review.rating"></stars>
+      <span>{{review.user}}</span>
+      <span class="pull-right"> {{review.dateCreated | date: 'longDate'}}</span>
+      <p>{{review.comment}}</p>
+    </div>
+  </div>
 </div>

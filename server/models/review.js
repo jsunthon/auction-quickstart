@@ -1,18 +1,17 @@
 class Review {
     constructor(id,
-                productId,
-                timestamp,
-                user,
+                dateCreated,
                 rating,
-                comment) {
+                comment,
+                productId,
+                userId) {
         this.id = id;
-        this.productId = productId;
-        this.timestamp = timestamp;
-        this.user = user;
+        this.dateCreated = dateCreated;
         this.rating = rating;
         this.comment = comment;
+        this.productId = productId;
+        this.userId = userId;
     }
 }
-
 
 module.exports = Review;

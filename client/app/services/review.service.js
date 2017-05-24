@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 require("rxjs/add/operator/map");
 var http_1 = require("@angular/http");
+var http_2 = require("@angular/http");
 var ReviewService = (function () {
     function ReviewService(http) {
         this.http = http;
@@ -24,14 +25,11 @@ var ReviewService = (function () {
         return this.http.get('/reviews')
             .map(function (res) { return res.json(); });
     };
-    /**
-     * Return the reviews associated with a particular product
-     * @param productId
-     * @returns {undefined|{id: number, productId: number, timestamp: string, user: string, rating: number, comment: string}|{id: number,
-      * productId: number, timestamp: string, user: string, rating: number, comment: string}}
-     */
-    ReviewService.prototype.getReviewsByProductId = function (productId) {
-        return this.http.get("/reviews/" + productId)
+    // Add a review for a product, by a particular user
+    ReviewService.prototype.addReview = function (body) {
+        var headers = new http_2.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this.http.post('/reviews', body, options)
             .map(function (res) { return res.json(); });
     };
     return ReviewService;

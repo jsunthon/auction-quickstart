@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
-var review_model_1 = require("../../models/review.model");
 var review_service_1 = require("../../services/review.service");
 var product_service_1 = require("../../services/product.service");
 var ProductDetailComponent = (function () {
@@ -28,17 +27,24 @@ var ProductDetailComponent = (function () {
             .subscribe(function (product) {
             _this.product = product;
         });
-        this.reviewService.getReviewsByProductId(this.productId)
+        this.productService.getProductReviews(this.productId)
             .subscribe(function (reviews) { return _this.reviews = reviews; });
     };
     ProductDetailComponent.prototype.addReview = function () {
+        var _this = this;
         if (this.newComment) {
-            // create a new review
-            var review = new review_model_1.Review(Math.random() + 100, this.product.id, new Date(), 'Anonymous user', this.newRating, this.newComment); // create the new review
-            console.log('Adding a new review: ' + JSON.stringify(review));
-            // add a review to the product's reviews
-            this.reviews = this.reviews.concat([review]);
-            this.product.rating = this.averageRating(this.reviews);
+            var body = {
+                rating: this.newRating,
+                comment: this.newComment,
+                productId: this.productId,
+                userId: 1
+            };
+            this.reviewService.addReview(body)
+                .subscribe(function () {
+                _this.productService.getProductReviews(_this.productId).subscribe(function (reviews) {
+                    _this.reviews = reviews;
+                });
+            }, function (err) { return alert(JSON.stringify(err)); });
             this.resetForm();
         }
     };
@@ -51,16 +57,12 @@ var ProductDetailComponent = (function () {
             return runningSum + review.rating;
         }, 0);
         var averageRating = reviewSum / reviews.length;
-        console.log('Got new rating: ' + averageRating);
         return averageRating;
     };
     ProductDetailComponent.prototype.resetForm = function () {
         this.newRating = 0;
         this.newComment = null;
         this.isReviewHidden = true;
-    };
-    ProductDetailComponent.prototype.newRatingHandler = function (event) {
-        console.log('Got new event: ' + JSON.stringify(event));
     };
     return ProductDetailComponent;
 }());

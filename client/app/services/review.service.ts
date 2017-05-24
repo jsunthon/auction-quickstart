@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {Review} from '../models/review.model';
 import {Observable} from 'rxjs/observable';
 import 'rxjs/add/operator/map';
-import {Http} from '@angular/http';
-
+import {Http, RequestOptions} from '@angular/http';
+import {Headers} from '@angular/http';
 
 @Injectable()
 export class ReviewService {
@@ -19,14 +19,11 @@ export class ReviewService {
       .map(res => res.json());
   }
 
-  /**
-   * Return the reviews associated with a particular product
-   * @param productId
-   * @returns {undefined|{id: number, productId: number, timestamp: string, user: string, rating: number, comment: string}|{id: number,
-    * productId: number, timestamp: string, user: string, rating: number, comment: string}}
-   */
-  getReviewsByProductId(productId: number): Observable<Review[]> {
-    return this.http.get(`/reviews/${productId}`)
+  // Add a review for a product, by a particular user
+  addReview(body: {}): any {
+    let headers = new Headers({'Content-Type': 'application/json'});
+    let options = new RequestOptions({headers});
+    return this.http.post('/reviews', body, options)
       .map(res => res.json());
   }
 }

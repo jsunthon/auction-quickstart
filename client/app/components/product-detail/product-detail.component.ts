@@ -29,26 +29,24 @@ export class ProductDetailComponent implements OnInit {
       .subscribe(product => {
         this.product = product;
       });
-    this.reviewService.getReviewsByProductId(this.productId)
+    this.productService.getProductReviews(this.productId)
       .subscribe(reviews => this.reviews = reviews);
   }
 
   addReview(): void {
     if (this.newComment) {
-      // create a new review
-      let review = new Review(
-        Math.random() + 100,
-        this.product.id,
-        new Date(),
-        'Anonymous user',
-        this.newRating,
-        this.newComment); // create the new review
-      console.log('Adding a new review: ' + JSON.stringify(review));
-
-      // add a review to the product's reviews
-      this.reviews = [...this.reviews, review];
-      this.product.rating = this.averageRating(this.reviews);
-
+      let body = {
+        rating: this.newRating,
+        comment: this.newComment,
+        productId: this.productId,
+        userId: 1
+      }
+      this.reviewService.addReview(body)
+        .subscribe(() => {
+          this.productService.getProductReviews(this.productId).subscribe(reviews => {
+            this.reviews = reviews;
+          });
+        }, err => alert(JSON.stringify(err)));
       this.resetForm();
     }
   }
@@ -62,8 +60,6 @@ export class ProductDetailComponent implements OnInit {
       return runningSum + review.rating;
     }, 0);
     let averageRating = reviewSum / reviews.length;
-
-    console.log('Got new rating: ' + averageRating);
     return averageRating;
   }
 
@@ -71,10 +67,5 @@ export class ProductDetailComponent implements OnInit {
     this.newRating = 0;
     this.newComment = null;
     this.isReviewHidden = true;
-  }
-
-  newRatingHandler(event: any) {
-
-    console.log('Got new event: ' + JSON.stringify(event));
   }
 }
