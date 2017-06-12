@@ -1,0 +1,14 @@
+<!-- Carousel -->
+<div class="row carousel-holder">
+  <div class="col-md-12">
+    <carousel></carousel>
+  </div>
+</div>
+
+<!-- Product Item Catalog -->
+<div class="row">
+  <div *ngFor="let prod of products" class="col-sm-4
+col-lg-4 col-md-4">
+    <product-item [product]="prod"></product-item>
+  </div>
+</div>

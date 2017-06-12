@@ -1,31 +1,23 @@
-import { NgModule }      from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {NgModule}      from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 
-import { AppComponent }  from './components/app/app.component';
-import {CarouselComponent} from './components/carousel/carousel.component';
-import {FooterComponent} from './components/footer/footer.component';
-import {NavbarComponent} from './components/navbar/navbar.component';
-import {ProductItemComponent} from './components/product-item/product-item.component';
-import {SearchComponent} from './components/search/search.component';
-import {StarsComponent} from './components/stars/stars.component';
+import {LocationStrategy, HashLocationStrategy} from '@angular/common';
+
+import {componentList} from './components-list';
 
 // Services
 import {ProductService} from './services/product.service';
 
 // Directives
 
+import {routing} from './app.routes';
+
 @NgModule({
-  imports:      [ BrowserModule ],
+  imports: [BrowserModule, routing],
   declarations: [
-    AppComponent,
-    CarouselComponent,
-    FooterComponent,
-    NavbarComponent,
-    ProductItemComponent,
-    SearchComponent,
-    StarsComponent
+    ...componentList
   ],
-  providers: [ProductService],
-  bootstrap: [AppComponent]
+  providers: [ProductService, {provide: LocationStrategy, useClass: HashLocationStrategy}],
+  bootstrap: [componentList[0]]
 })
-export class AppModule { }
+export class AppModule {}
