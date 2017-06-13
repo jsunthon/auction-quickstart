@@ -8,7 +8,10 @@ import {SearchComponent} from './components/search/search.component';
 import {StarsComponent} from './components/stars/stars.component';
 import {ProductDetailComponent} from './components/product-detail/product-detail.component';
 
-export const componentList = [
+// pipes
+import {SearchFilterPipe} from './pipes/search-filterpipe';
+
+export const declarablesList = [
   AppComponent,
   ProductDetailComponent,
   CarouselComponent,
@@ -17,5 +20,6 @@ export const componentList = [
   ProductItemComponent,
   SearchComponent,
   StarsComponent,
-  HomeComponent
-]
+  HomeComponent,
+  SearchFilterPipe
+];
