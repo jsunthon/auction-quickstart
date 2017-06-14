@@ -2,8 +2,7 @@
 <br>
 <form [formGroup]="formModel" (ngSubmit)="onSubmit()">
   <div>Username: <input formControlName="username" type="text"></div>
-  <span [hidden]="!formModel.hasError('required', 'username')" class="text-warning"
-        [class.hasError]="username.invalid && username.touched">Username is required!</span>
+  <span [hidden]="!formModel.hasError('required', 'username')" class="text-warning">Username is required!</span>
   <div>SSN: <input formControlName="ssn" type="text"></div>
   <span [hidden]="!formModel.hasError('ssn', 'ssn')">SSN must be exactly 9 characters, each of which is a number</span>
   <div formGroupName="passwordsGroup">
