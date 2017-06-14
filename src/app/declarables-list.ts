@@ -8,6 +8,10 @@ import {SearchComponent} from './components/search/search.component';
 import {StarsComponent} from './components/stars/stars.component';
 import {ProductDetailComponent} from './components/product-detail/product-detail.component';
 
+
+// from guide
+import {FormGuideComponent} from './components/form-guide/form-guide.component';
+
 // pipes
 import {SearchFilterPipe} from './pipes/search-filterpipe';
 
@@ -21,5 +25,6 @@ export const declarablesList = [
   SearchComponent,
   StarsComponent,
   HomeComponent,
-  SearchFilterPipe
+  SearchFilterPipe,
+  FormGuideComponent
 ];

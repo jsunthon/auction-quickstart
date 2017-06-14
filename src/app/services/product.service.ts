@@ -27,4 +27,13 @@ export class ProductService {
   getProductById(id: number): Product {
     return this.getProducts().find(product => product.id === id);
   }
+
+  getCategories(): string[] {
+    return [
+      'All categories',
+      'electronics',
+      'hardware',
+      'books'
+    ];
+  }
 }

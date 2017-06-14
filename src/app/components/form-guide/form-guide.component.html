@@ -1,0 +1,14 @@
+<h1>Welcome to the Form Guide!</h1>
+<br>
+<form [formGroup]="formModel" (ngSubmit)="onSubmit()">
+  <div>Username: <input formControlName="username" type="text"></div>
+  <span [hidden]="!formModel.hasError('required', 'username')" class="text-warning"
+        [class.hasError]="username.invalid && username.touched">Username is required!</span>
+  <div>SSN: <input formControlName="ssn" type="text"></div>
+  <span [hidden]="!formModel.hasError('ssn', 'ssn')">SSN must be exactly 9 characters, each of which is a number</span>
+  <div formGroupName="passwordsGroup">
+    <div>Password: <input formControlName="pw" type="password"></div>
+    <div>Confirm Password: <input formControlName="confPw" type="password"></div>
+  </div>
+  <button type="submit">Submit</button>
+</form>
