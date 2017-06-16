@@ -23,7 +23,7 @@ export class StarsComponent implements OnInit {
   }
 
   set rating(value: number) {
-    console.log('Rating changes value to: ' + value);
+    // console.log('Rating changes value to: ' + value);
     this._rating = value || 0; // if value is undefined, _rating gets a default value of 0
     this.stars = Array(this.maxStars).fill(true, 0, this._rating);
   }
