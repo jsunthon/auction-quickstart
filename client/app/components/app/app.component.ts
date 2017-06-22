@@ -11,6 +11,9 @@ export class AppComponent {
     products: Array<Product> = []; // initialize and assign the product array
 
     constructor(private productService: ProductService) {
-        this.products = this.productService.getProducts();
+        this.productService.getProducts()
+          .subscribe(products => {
+            this.products = products;
+          });
     }
 }

@@ -13,9 +13,13 @@ var core_1 = require("@angular/core");
 var product_service_1 = require("../../services/product.service");
 var AppComponent = (function () {
     function AppComponent(productService) {
+        var _this = this;
         this.productService = productService;
         this.products = []; // initialize and assign the product array
-        this.products = this.productService.getProducts();
+        this.productService.getProducts()
+            .subscribe(function (products) {
+            _this.products = products;
+        });
     }
     return AppComponent;
 }());

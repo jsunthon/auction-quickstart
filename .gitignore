@@ -1,4 +1,4 @@
-.idea
+.idea/*
 node_modules
 jspm_packages
 npm-debug.log
@@ -8,7 +8,9 @@ src/**/*.js
 !src/systemjs.config.js
 !src/systemjs-angular-loader.js
 *.js.map
-e2e/**/*.js
-e2e/**/*.js.map
+client/e2e/**/*.js
+client/e2e/**/*.js.map
 _test-output
 _temp
+
+client/.DS_Store
