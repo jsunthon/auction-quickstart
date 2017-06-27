@@ -1,10 +1,11 @@
-create database if not exists auction_quickstart;
+drop database if exists auction_quickstart;
+create database auction_quickstart;
 
 use auction_quickstart;
 
-drop table if exists reviews;
-drop table if exists products;
-drop table if exists users;
+drop table reviews;
+drop table products;
+drop table users;
 
 create table users (
   id int PRIMARY KEY  NOT NULL AUTO_INCREMENT,

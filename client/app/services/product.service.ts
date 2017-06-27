@@ -14,16 +14,20 @@ export class ProductService {
   }
 
   getProducts(): Observable<Product[]> {
-    return this.http.get('/products')
+    return this.http.get('/products/all')
       .map(res => {
         let unparsed = res.json();
-        return unparsed.map((jsonProd: any) => {
-          let categories = jsonProd.categories.split(',');
-          jsonProd.categories = categories;
-          return jsonProd;
-        });
+        return unparsed.map(this.delimitCate);
       });
   };
+
+  getProductsSearch(term: String): Observable<Product[]> {
+    return this.http.get(`/products/search?term=${term}`)
+      .map(res => {
+        let unparsed = res.json();
+        return unparsed.map(this.delimitCate);
+      });
+  }
 
   /**
    * Returns the product with the specified ID.
@@ -44,6 +48,16 @@ export class ProductService {
   getProductReviews(productId: number): Observable<Review[]> {
     return this.http.get(`/products/${productId}/reviews`)
       .map(res => res.json());
+  }
+
+  deleteProduct(product: Product): Observable<any> {
+    return this.http.delete(`/products/${product.id}`)
+      .map(res => res.json());
+  }
+
+  delimitCate(product: any): Product {
+    product.categories = product.categories.split(',');
+    return product;
   }
 
   getCategories(): string[] {

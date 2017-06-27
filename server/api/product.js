@@ -1,12 +1,28 @@
 function productApi(app, dbConn) {
+
     /**
      * Get all products
      */
-    app.get('/products', (req, res) => {
-        dbConn.query('SELECT * from PRODUCTS', (err, results, fields) => {
+    app.get('/products/all', (req, res) => {
+        let query = 'SELECT * from PRODUCTS';
+        dbConn.query(query, (err, results, fields) => {
             if (err) {
                 res.status(500).json(err);
             } else {
+                res.status(200).json(results);
+            }
+        });
+    });
+
+    /**
+     * Get searched products
+     */
+    app.get('/products/search', (req, res) => {
+        dbConn.query(`SELECT * from PRODUCTS where title LIKE '%${req.query.term}%'`, (err, results, fields) => {
+            if (err) {
+                res.status(500).json(err);
+            } else {
+                console.log(results);
                 res.status(200).json(results);
             }
         });
@@ -24,6 +40,24 @@ function productApi(app, dbConn) {
             } else {
                 res.status(200).json(products);
             }
+        });
+    });
+
+    app.delete('/products/:id', (req, res) => {
+        let productId = parseInt(req.params.id, 10);
+        let deleteStmt = "DELETE from reviews where productId = ?";
+        dbConn.query(deleteStmt, [productId], (err, results, fields) => {
+            if (err) {
+                res.status(500).json(err);
+            }
+            deleteStmt = "DELETE from PRODUCTS where id = ?";
+            dbConn.query(deleteStmt, [productId], (err, results, fields) => {
+                if (err) {
+                    res.status(500).json(err);
+                } else {
+                    res.status(201).json({status: 'successful'});
+                }
+            });
         });
     });
 
@@ -52,6 +86,44 @@ function productApi(app, dbConn) {
             res.status(200).json(reviews);
         });
     });
+
+    app.get('/file/download/:name', (req, res, next) => {
+        console.log(`download file:  ${req.params.name}`);
+        let filePath = '/' + req.params.name;
+        res.download(__dirname + filePath, req.params.name, err => {
+            if (err) {
+                res.send(err);
+            } else {
+                console.log('Successfully downloaded');
+            }
+        });
+    });
+
+    app.get('/c', [cb0], function (req, res, next) {
+        console.log('From second func');
+        next();
+    }, function (req, res, next) {
+        console.log(res);
+        next();
+    }, function (req, res) {
+        res.redirect('products');
+    });
+
+    function cb0(req, res, next) {
+        let x = 0;
+        console.log('X from cb0:' + x);
+        next();
+    }
+
+    function cb1(req, res, next) {
+        console.log('Arguments in cb1: ' + arguments);
+        next();
+    }
+
+    function cb2(req, res) {
+        console.log('Arguments in cb2: ' + arguments);
+        res.send('Hello from C!');
+    }
 }
 
 module.exports = productApi;

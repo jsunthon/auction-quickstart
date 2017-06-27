@@ -9,7 +9,9 @@ app.use(bodyParser.json());
 
 const client = path.join(__dirname, '..', 'client');
 app.use(express.static(client));
-app.get('/', (req, res) => res.sendFile(path.join(__dirname, '../client/app/index.html'))); // default home page
+app.get('/', (req, res) => res.sendFile(`${client}/app/index.html`)); // default home page
+
+let server;
 
 dbConn.connect(err => {
     if (err) {
@@ -21,7 +23,7 @@ dbConn.connect(err => {
     require('./api/product')(app, dbConn);
     require('./api/review')(app, dbConn);
 
-    const server = app.listen(8000, "localhost", () => {
+    server = app.listen(8000, "localhost", () => {
         console.log('Hey!');
     });
 });

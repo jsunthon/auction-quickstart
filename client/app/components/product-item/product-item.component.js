@@ -25,7 +25,8 @@ ProductItemComponent = __decorate([
         selector: 'product-item',
         templateUrl: 'app/components/product-item/product-item.component.html',
         styleUrls: ['app/components/product-item/product-item.component.css']
-    })
+    }),
+    __metadata("design:paramtypes", [])
 ], ProductItemComponent);
 exports.ProductItemComponent = ProductItemComponent;
 //# sourceMappingURL=product-item.component.js.map

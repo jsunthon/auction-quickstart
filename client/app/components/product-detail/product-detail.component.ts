@@ -46,7 +46,7 @@ export class ProductDetailComponent implements OnInit {
           this.productService.getProductReviews(this.productId).subscribe(reviews => {
             this.reviews = reviews;
           });
-        }, err => alert(JSON.stringify(err)));
+        }, (err: any) => alert(JSON.stringify(err)));
       this.resetForm();
     }
   }

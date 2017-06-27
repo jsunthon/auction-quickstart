@@ -11,14 +11,15 @@
     <div class="form-group">
       <input placeholder="Filter products by title"
              class="form-control" type="text"
-             [formControl]="titleFilter">
+             [formControl]="titleFilter"
+             (keyup)="search(titleFilter.value)">
     </div>
   </div>
 </div>
 
 <!-- Product Item Catalog -->
 <div class="row">
-  <div *ngFor="let prod of products | searchFilter:'title':filterCriteria" class="col-sm-4
+  <div *ngFor="let prod of products | async" class="col-sm-4
 col-lg-4 col-md-4">
     <product-item [product]="prod"></product-item>
   </div>

@@ -17,17 +17,22 @@ var ProductService = (function () {
         this.http = http;
     }
     ProductService.prototype.getProducts = function () {
-        return this.http.get('/products')
+        var _this = this;
+        return this.http.get('/products/all')
             .map(function (res) {
             var unparsed = res.json();
-            return unparsed.map(function (jsonProd) {
-                var categories = jsonProd.categories.split(',');
-                jsonProd.categories = categories;
-                return jsonProd;
-            });
+            return unparsed.map(_this.delimitCate);
         });
     };
     ;
+    ProductService.prototype.getProductsSearch = function (term) {
+        var _this = this;
+        return this.http.get("/products/search?term=" + term)
+            .map(function (res) {
+            var unparsed = res.json();
+            return unparsed.map(_this.delimitCate);
+        });
+    };
     /**
      * Returns the product with the specified ID.
      * @param id
@@ -46,6 +51,14 @@ var ProductService = (function () {
     ProductService.prototype.getProductReviews = function (productId) {
         return this.http.get("/products/" + productId + "/reviews")
             .map(function (res) { return res.json(); });
+    };
+    ProductService.prototype.deleteProduct = function (product) {
+        return this.http.delete("/products/" + product.id)
+            .map(function (res) { return res.json(); });
+    };
+    ProductService.prototype.delimitCate = function (product) {
+        product.categories = product.categories.split(',');
+        return product;
     };
     ProductService.prototype.getCategories = function () {
         return [

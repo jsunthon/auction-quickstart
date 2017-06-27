@@ -13,25 +13,39 @@ var core_1 = require("@angular/core");
 var product_service_1 = require("../../services/product.service");
 var forms_1 = require("@angular/forms");
 require("rxjs/add/operator/debounceTime");
+var Observable_1 = require("rxjs/Observable");
+var Subject_1 = require("rxjs/Subject");
+require("rxjs/add/operator/switchMap");
+require("rxjs/add/operator/catch");
+require("rxjs/add/observable/of");
+require("rxjs/add/operator/distinctUntilChanged");
 var HomeComponent = (function () {
     function HomeComponent(productService) {
         this.productService = productService;
-        this.products = [];
+        this.searchTerms = new Subject_1.Subject();
         this.titleFilter = new forms_1.FormControl();
-        this.filterCriteria = '';
+        this.startSearch = false;
     }
-    HomeComponent.prototype.ngOnInit = function () {
+    HomeComponent.prototype.search = function (key) {
         var _this = this;
-        this.productService.getProducts().subscribe(function (products) { return _this.products = products; }, function (error) { return console.error(error); }, function () { return console.log('fnished getting proj attempt'); });
-        // valueChanges returns an obsercable of elements received from the input element
-        this.titleFilter.valueChanges
-            .debounceTime(100)
-            .subscribe(assignValue, function (error) { return console.error(error); });
-        function assignValue(value) {
-            console.log('Got new assigned value: ' + value);
-            this.filterCriteria = value;
-            console.log('New filter criteria: ' + this.filterCriteria);
+        if (!this.startSearch) {
+            this.startSearch = true;
+            this.products = this.searchTerms
+                .debounceTime(300)
+                .distinctUntilChanged()
+                .switchMap(function (term) {
+                console.log('Got new value: ' + key);
+                return term ? _this.productService.getProductsSearch(term) : Observable_1.Observable.of([]);
+            })
+                .catch(function (error) {
+                console.error(error);
+                return Observable_1.Observable.of([]);
+            });
         }
+        this.searchTerms.next(key);
+    };
+    HomeComponent.prototype.ngOnInit = function () {
+        this.products = this.productService.getProducts();
     };
     return HomeComponent;
 }());
