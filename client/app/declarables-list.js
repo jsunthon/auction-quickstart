@@ -9,6 +9,9 @@ var product_item_component_1 = require("./components/product-item/product-item.c
 var search_component_1 = require("./components/search/search.component");
 var stars_component_1 = require("./components/stars/stars.component");
 var product_detail_component_1 = require("./components/product-detail/product-detail.component");
+var product_management_component_1 = require("./components/product-management/product-management.component");
+var product_edit_component_1 = require("./components/product-management/product-edit/product-edit.component");
+var product_add_component_1 = require("./components/product-management/product-add/product-add.component");
 // from guide
 var form_guide_component_1 = require("./components/form-guide/form-guide.component");
 // pipes
@@ -24,6 +27,9 @@ exports.declarablesList = [
     stars_component_1.StarsComponent,
     home_component_1.HomeComponent,
     search_filterpipe_1.SearchFilterPipe,
-    form_guide_component_1.FormGuideComponent
+    form_guide_component_1.FormGuideComponent,
+    product_management_component_1.ProductManagementComponent,
+    product_edit_component_1.ProductEditComponent,
+    product_add_component_1.ProductAddComponent
 ];
 //# sourceMappingURL=declarables-list.js.map

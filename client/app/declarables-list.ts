@@ -7,7 +7,9 @@ import {ProductItemComponent} from './components/product-item/product-item.compo
 import {SearchComponent} from './components/search/search.component';
 import {StarsComponent} from './components/stars/stars.component';
 import {ProductDetailComponent} from './components/product-detail/product-detail.component';
-
+import {ProductManagementComponent} from './components/product-management/product-management.component';
+import {ProductEditComponent} from './components/product-management/product-edit/product-edit.component';
+import {ProductAddComponent} from './components/product-management/product-add/product-add.component';
 
 // from guide
 import {FormGuideComponent} from './components/form-guide/form-guide.component';
@@ -26,5 +28,8 @@ export const declarablesList = [
   StarsComponent,
   HomeComponent,
   SearchFilterPipe,
-  FormGuideComponent
+  FormGuideComponent,
+  ProductManagementComponent,
+  ProductEditComponent,
+  ProductAddComponent
 ];

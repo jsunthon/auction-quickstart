@@ -62,6 +62,44 @@ function productApi(app, dbConn) {
     });
 
     /**
+     * Updates the given product with the given id, and creating it if none yet exists
+     */
+    app.put('/products', (req, res) => {
+        const body = req.body;
+        const id = body.productId;
+        const title = body.title;
+        const price = body.price;
+        const rating = body.rating;
+        const description = body.description;
+        const categories = body.categories.reduce((acc, curr, index, arr) => {
+            acc += curr;
+            if (index !== body.categories.length - 1) {
+                acc += ', ';
+            }
+            return acc;
+        }, '');
+        let query = 'SELECT id from products where id = ?';
+        dbConn.query(query, [id], (err, results, fields) => {
+            if (results.length > 0) {
+                query = "UPDATE products set title = ?, price = ?, rating = ?, description = ?, " +
+                    "categories = ? where id = ?";
+                dbConn.query(query, [title, price, rating, description, categories, id],
+                    (err, results, fields) => {
+                        sendResp(res, err, results);
+                    });
+            } else {
+                // create a new record
+                query = "INSERT INTO products (title, price, rating, description, categories)"
+                    + " VALUES (?, ?, ?, ?, ?)";
+                dbConn.query(query, [title, price, rating, description, categories],
+                    (err, results, fields) => {
+                        sendResp(res, err, results);
+                    });
+            }
+        });
+    });
+
+    /**
      * Get all the reviews for a particular product
      */
     app.get('/products/:id/reviews', (req, res) => {
@@ -98,6 +136,15 @@ function productApi(app, dbConn) {
             }
         });
     });
+
+    function sendResp(res, err, results) {
+        if (err) {
+            console.error(err.Error);
+            res.sendStatus(500);
+        } else {
+            res.sendStatus(200);
+        }
+    }
 
     app.get('/c', [cb0], function (req, res, next) {
         console.log('From second func');

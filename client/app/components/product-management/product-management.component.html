@@ -1,0 +1,30 @@
+<div>
+
+</div>
+<hr>
+<div>
+  <button class="btn btn-info">Add Product</button>
+</div>
+<hr>
+<table class="table table-bordered">
+  <thead>
+  <tr>
+    <th></th>
+    <th>Title</th>
+    <th>Price</th>
+    <th>Rating</th>
+    <th>Description</th>
+    <th>Categories</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr class="table-success" *ngFor="let product of products">
+    <td><button class="btn btn-default">Edit</button></td>
+    <td>{{product.title}}</td>
+    <td>{{product.price}}</td>
+    <td>{{product.rating}}</td>
+    <td>{{product.description}}</td>
+    <td>{{product.categories}}</td>
+  </tr>
+  </tbody>
+</table>
