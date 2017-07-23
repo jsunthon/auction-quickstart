@@ -1,1 +1,31 @@
-product edit
+<h3>Edit Product Form</h3>
+<form>
+  <div class="form-group">
+    <label for="title">Title</label>
+    <input type="text" class="form-control" id="title" placeholder="Enter title">
+  </div>
+  <div class="form-group">
+    <label for="price">Price</label>
+    <input type="number" class="form-control" id="price" placeholder="Enter price">
+  </div>
+  <div class="form-group">
+    <label for="description">Description</label>
+    <textarea class="form-control" id="description" rows="6"></textarea>
+  </div>
+  <div class="form-check">
+    <label class="form-check-label">
+      <input type="checkbox" class="form-check-input">
+      Books
+    </label>
+    <label class="form-check-label">
+      <input type="checkbox" class="form-check-input">
+      Electronics
+    </label>
+    <label class="form-check-label">
+      <input type="checkbox" class="form-check-input">
+      Hardware
+    </label>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+  <button (click)="closeForm()" class="btn btn-warning">Close</button>
+</form>

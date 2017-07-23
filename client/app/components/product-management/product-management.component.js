@@ -28,6 +28,12 @@ var ProductManagementComponent = (function () {
             _this.message = deleted ? 'Successfully deleted' : 'Could not delete';
         }, function (err) { return _this.message = err; });
     };
+    // impl event handler for closing of any form on the page
+    ProductManagementComponent.prototype.onFormClose = function (value) {
+        if (value && value.length > 0) {
+            this.action = '';
+        }
+    };
     return ProductManagementComponent;
 }());
 ProductManagementComponent = __decorate([

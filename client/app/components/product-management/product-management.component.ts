@@ -13,6 +13,7 @@ export class ProductManagementComponent implements OnInit {
   private editForm: FormGroup;
   private addForm: FormGroup;
   private message: string;
+  public action: string;
 
   constructor(private productService: ProductService) {
   }
@@ -31,9 +32,10 @@ export class ProductManagementComponent implements OnInit {
       }, err => this.message = err);
   }
 
-  // Impl edit button, show popup
-
-
-  // Iml add button, show pop
-
+  // impl event handler for closing of any form on the page
+  onFormClose(value: string) {
+    if (value && value.length > 0) {
+      this.action = '';
+    }
+  }
 }

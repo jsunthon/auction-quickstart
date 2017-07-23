@@ -24,5 +24,6 @@ import {HttpModule} from '@angular/http';
   providers: [ProductService, {provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [declarablesList[0]]
 })
+
 export class AppModule {
 }

@@ -1,11 +1,17 @@
-<div>
+<div [ngSwitch]="action">
+  <product-add (close)="onFormClose($event)" *ngSwitchCase="'addProd'"></product-add>
+  <product-edit (close)="onFormClose($event)" *ngSwitchCase="'editProd'"></product-edit>
+  <span *ngSwitchDefault></span>
+</div>
 
-</div>
+<!-- Add Product -->
 <hr>
 <div>
-  <button class="btn btn-info">Add Product</button>
+  <button (click)="action = 'addProd'" class="btn btn-info">Add Product</button>
 </div>
 <hr>
+<!-- End Add Product -->
+
 <table class="table table-bordered">
   <thead>
   <tr>
@@ -19,7 +25,9 @@
   </thead>
   <tbody>
   <tr class="table-success" *ngFor="let product of products">
-    <td><button class="btn btn-default">Edit</button></td>
+    <td>
+      <button (click)="action = 'editProd'" class="btn btn-info">Edit</button>
+    </td>
     <td>{{product.title}}</td>
     <td>{{product.price}}</td>
     <td>{{product.rating}}</td>
